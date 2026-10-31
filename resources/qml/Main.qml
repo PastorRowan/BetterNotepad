@@ -1,9 +1,8 @@
 
+import "pages"
+
 import QtQuick
 import QtQuick.Controls
-
-import "components"
-import "pages"
 
 ApplicationWindow {
 

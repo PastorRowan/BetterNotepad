@@ -3,8 +3,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../components"
-
 Page {
 
     id: root
@@ -13,13 +11,13 @@ Page {
 
     property var documents: [
         {
-            filePath: ""
-            fileName: "Untitled"
+            filePath: "",
+            fileName: "Untitled",
             text: ""
         }
     ]
 
-    property var selectedDocumentIndex: 0
+    property int selectedDocumentIndex: 0
 
     function getSelectedDocument() {
         return documents[selectedDocumentIndex];
@@ -42,27 +40,105 @@ Page {
     ColumnLayout {
 
         anchors.fill: parent
-        anchors.margins: 20
+        spacing: 0
 
         TabBar {
 
             id: tabBar
             
             Layout.fillWidth: true
-            Layout.prefferedHeight: 35
+            height: 20
+
+            topPadding: 10
+            leftPadding: 30
+            spacing: 1
 
             Repeater {
 
                 model: root.documents
 
                 TabButton {
+
+                    height: tabBar.height
+                    width: 235
+
+                    topPadding: 2
+                    bottomPadding: 2
+                    leftPadding: 20
+                    rightPadding: 0
+
+                    leftInset: 0
+                    rightInset: 0
+                    topInset: 0
+                    bottomInset: 0
+
+                    font {
+                        family: "Segoe UI Variable"
+                        pixelSize: 11
+                        // or 12 idk
+                        weight: Font.Bold
+                    }
+
                     text: modelData.fileName
-                    width: Math.max(100, bar.width / 5)
+
+                    background: Rectangle {
+                        anchors.fill: parent
+                        anchors.margins: 0
+                        topLeftRadius: 6
+                        topRightRadius: 6
+                        color: "#2C2C2C"
+                    }
+
                     onClicked: function() {
                         root.switchDocument(index)
                     }
+
                 }
             }
+        }
+
+        ToolBar {
+
+            id: toolBar
+
+            Layout.fillWidth: true
+            Layout.preferredHeight: 40
+
+            padding: 0
+            spacing: 0
+
+            background: Rectangle {
+                color: "#2C2C2C"
+            }
+
+            RowLayout {
+
+                ToolButton {
+
+                    id: fileButton
+
+                    text: "File"
+
+                }
+
+                ToolButton {
+
+                    id: editButton
+
+                    text: "Edit"
+
+                }
+
+                ToolButton {
+
+                    id: viewButton
+
+                    text: "View"
+
+                }
+                
+            }
+
         }
 
         TextArea {
@@ -78,7 +154,7 @@ Page {
 
             id: statusBar
 
-            Layout.prefferredHeight: 35
+            Layout.preferredHeight: 35
             Layout.fillWidth: true
 
             Label {

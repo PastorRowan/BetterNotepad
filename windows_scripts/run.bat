@@ -1,10 +1,10 @@
 
-:: Deploys and launches the Vehicle Rental System application
+:: Deploys and launches the application
 
 pushd "%~dp0.."
 pushd build
 
-TorrentSearch.exe
+BetterNodepad.exe
 
 popd
 popd
