@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         */
     });
 
-    engine.loadFromModule("BetterNodepad", "Main");
+    engine.loadFromModule("BetterNotepad", "Main");
 
     return app.exec();
 

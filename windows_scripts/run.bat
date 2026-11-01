@@ -4,7 +4,7 @@
 pushd "%~dp0.."
 pushd build
 
-BetterNodepad.exe
+BetterNotepad.exe
 
 popd
 popd

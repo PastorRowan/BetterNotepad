@@ -9,7 +9,7 @@ ApplicationWindow {
     width: 800
     height: 600
     visible: true
-    title: "BetterNodepad"
+    title: "BetterNotepad"
 
     StackView {
 

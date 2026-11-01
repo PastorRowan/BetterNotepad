@@ -1,4 +1,8 @@
 
+import BetterNotepad
+
+import "../components"
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -21,6 +25,13 @@ Page {
 
     function getSelectedDocument() {
         return documents[selectedDocumentIndex];
+    }
+
+    function createDocument(
+        filePath: string,
+        fileName: string
+    ) {
+        
     }
 
     function switchDocument(
@@ -47,10 +58,13 @@ Page {
             id: tabBar
             
             Layout.fillWidth: true
-            height: 20
+            height: 8
 
-            topPadding: 10
-            leftPadding: 30
+            topPadding: 0
+            leftPadding: 45
+            bottomPadding: 0
+            rightPadding: 0
+
             spacing: 1
 
             Repeater {
@@ -62,9 +76,9 @@ Page {
                     height: tabBar.height
                     width: 235
 
-                    topPadding: 2
+                    topPadding: 0
                     bottomPadding: 2
-                    leftPadding: 20
+                    leftPadding: 8
                     rightPadding: 0
 
                     leftInset: 0
@@ -72,14 +86,41 @@ Page {
                     topInset: 0
                     bottomInset: 0
 
-                    font {
-                        family: "Segoe UI Variable"
-                        pixelSize: 11
-                        // or 12 idk
-                        weight: Font.Bold
-                    }
+                    contentItem: RowLayout {
 
-                    text: modelData.fileName
+                        spacing: 0
+
+                        Text {
+                            text: modelData.fileName
+                            font: Fonts.tabButton
+                            color: "#FFFFFF"
+                            horizontalAlignment: Text.AlignLeft
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 1
+                            opacity: 0
+                        }
+
+                        ToolButton {
+                            Layout.preferredWidth: 28
+                            Layout.fillHeight: true
+
+                            text: "×"
+
+                            font.pixelSize: 21
+                            font.weight: 500
+                            palette.buttonText: "#FFFFFF"
+
+                            onClicked: function() {
+                                console.log("Close tab:", index)
+                            }
+                        }
+
+                    }
 
                     background: Rectangle {
                         anchors.fill: parent
@@ -111,32 +152,264 @@ Page {
                 color: "#2C2C2C"
             }
 
-            RowLayout {
+            contentItem: RowLayout {
 
-                ToolButton {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                NotepadToolMenuButton {
 
                     id: fileButton
 
                     text: "File"
 
+                    onClicked: function() {
+                        console.log("Clicked fileButton, opening fileButtonMenu");
+                        fileButtonMenu.popup(
+                            fileButton,
+                            0,
+                            fileButton.height
+                        );
+                    }
+
+                    NotepadMenu {
+
+                        id: fileButtonMenu
+
+                        NotepadMenuItem {
+                            id: newTabMenuItem
+                            text: "New tab"
+                            onTriggered: console.log("Pressed fileButton->newTabMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: newWindowMenuItem
+                            text: "New Window"
+                            onTriggered: console.log("Pressed fileButton->newWindowMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: openMenuItem
+                            text: "New Window"
+                            onTriggered: console.log("Pressed fileButton->openMenuItem")
+                        }
+
+                        /*
+                        // May add this in future
+                        NotepadMenuItem {
+                            id: recentMenuItem
+                            text: "Recent"
+                            onTriggered: console.log("Pressed fileButton->recentMenuItem")
+                        }
+                        */
+
+                        NotepadMenuItem {
+                            id: saveMenuItem
+                            text: "Save"
+                            onTriggered: console.log("Pressed fileButton->saveMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: saveAsMenuItem
+                            text: "Save as"
+                            onTriggered: console.log("Pressed fileButton->saveAsMenuItem")
+                        }
+
+                        NotepadMenuSeperator {}
+
+                        NotepadMenuItem {
+                            id: closeTabMenuItem
+                            text: "Close tab"
+                            onTriggered: console.log("Pressed fileButton->closeTabMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: closeWindowMenuItem
+                            text: "Close window"
+                            onTriggered: console.log("Pressed fileButton->closeWindowMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: exitMenuItem
+                            text: "Exit"
+                            onTriggered: console.log("Pressed fileButton->exitMenuItem")
+                        }
+
+                    }
+
                 }
 
-                ToolButton {
+                NotepadToolMenuButton {
 
                     id: editButton
 
                     text: "Edit"
 
+                    font: Fonts.toolButton
+
+                    palette.buttonText: "#FFFFFF"
+
+                    onClicked: function() {
+                        console.log("Clicked editButton, opening editButtonMenu");
+                        editButtonMenu.popup(
+                            editButton,
+                            0,
+                            editButton.height
+                        );
+                    }
+
+                    NotepadMenu {
+
+                        id: editButtonMenu
+
+                        NotepadMenuItem {
+                            id: undoMenuItem
+                            text: "Undo"
+                            onTriggered: console.log("Pressed editButtonMenu->undoMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: redoMenuItem
+                            text: "Redo"
+                            onTriggered: console.log("Pressed editButtonMenu->redoMenuItem")
+                        }
+
+                        NotepadMenuSeperator {}
+
+                        NotepadMenuItem {
+                            id: cutMenuItem
+                            text: "Cut"
+                            onTriggered: console.log("Pressed editButtonMenu->cutMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: copyMenuItem
+                            text: "Copy"
+                            onTriggered: console.log("Pressed editButtonMenu->copyMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: pasteMenuItem
+                            text: "Paste"
+                            onTriggered: console.log("Pressed editButtonMenu->pasteMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: deleteMenuItem
+                            text: "Delete"
+                            onTriggered: console.log("Pressed editButtonMenu->deleteMenuItem")
+                        }
+
+                        NotepadMenuSeperator {}
+
+                        NotepadMenuItem {
+                            id: findMenuItem
+                            text: "Find"
+                            onTriggered: console.log("Pressed editButtonMenu->findMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: findNextMenuItem
+                            text: "Find next"
+                            onTriggered: console.log("Pressed editButtonMenu->findNextMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: findPreviousMenuItem
+                            text: "Find previous"
+                            onTriggered: console.log("Pressed editButtonMenu->findPreviousMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: replaceMenuItem
+                            text: "Replace"
+                            onTriggered: console.log("Pressed editButtonMenu->replaceMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: goToMenuItem
+                            text: "Go to"
+                            onTriggered: console.log("Pressed editButtonMenu->goToMenuItem")
+                        }
+
+                        NotepadMenuSeperator {}
+
+                        NotepadMenuItem {
+                            id: selectAllMenuItem
+                            text: "Select all"
+                            onTriggered: console.log("Pressed editButtonMenu->selectAllMenuItem")
+                        }
+
+                    }
+
                 }
 
-                ToolButton {
+                NotepadToolMenuButton {
 
                     id: viewButton
 
                     text: "View"
 
+                    font: Fonts.toolButton
+
+                    palette.buttonText: "#FFFFFF"
+
+                    onClicked: function() {
+                        console.log("Clicked viewButton, opening viewButtonMenu");
+                        viewButtonMenu.popup(
+                            viewButton,
+                            0,
+                            viewButton.height
+                        );
+                    }
+
+                    NotepadMenu {
+
+                        id: viewButtonMenu
+
+                        NotepadMenuItem {
+                            id: zoomMenuItem
+                            text: "Zoom"
+                            onTriggered: console.log("Pressed viewButtonMenu->zoomMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: statusBarMenuItem
+                            text: "Status bar"
+                            onTriggered: console.log("Pressed viewButtonMenu->statusBarMenuItem")
+                        }
+
+                        NotepadMenuItem {
+                            id: wordWrapMenuItem
+                            text: "Word wrap"
+                            onTriggered: console.log("Pressed viewButtonMenu->wordWrapMenuItem")
+                        }
+
+                    }
+
                 }
-                
+
+                Rectangle {
+                    height: 1
+                    Layout.fillWidth: true
+                    opacity: 0
+                }
+
+                ToolButton {
+
+                    id: settingsToolButton
+
+                    icon.height: 20
+                    icon.width: 20
+                    icon.name: "settings"
+                    icon.color: "#FFFFFF"
+
+                    onClicked: function() {
+                        console.log("Clicked settingsToolButton");
+                    }
+
+                }
+
             }
 
         }
@@ -147,6 +420,13 @@ Page {
 
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            text: getSelectedDocument().text
+
+            background: Rectangle {
+                color: "#272727"
+                border.width: 0
+            }
 
         }
 
