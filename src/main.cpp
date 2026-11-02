@@ -1,6 +1,4 @@
 
-#include "FileUtils.h"
-
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -18,15 +16,6 @@ int main(int argc, char *argv[]) {
     qDebug() << "Qt Quick Controls style:" << QQuickStyle::name();
 
     QQmlApplicationEngine engine;
-
-    engine.rootContext()->setContextProperties({
-        /*
-        {
-            "fileUtils",
-            QVariant::fromValue(&fileUtils)
-        }
-        */
-    });
 
     engine.loadFromModule("BetterNotepad", "Main");
 

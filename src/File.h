@@ -8,7 +8,7 @@
 class File : public QObject {
 
     Q_OBJECT
-    QML_ELEMENT
+    // QML_ELEMENT
 
     Q_PROPERTY(QString path READ getPath WRITE setPath NOTIFY pathChanged)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
@@ -17,7 +17,6 @@ class File : public QObject {
     private:
 
         QString m_path = "";
-        QString m_name = "Untitled";
         QString m_text = "";
 
     protected:
@@ -31,10 +30,10 @@ class File : public QObject {
         QString getPath() const;
 
         void setPath(
-            const QString& newPath
+            const QString& new_path
         );
 
-        QString getName const;
+        QString getName() const;
 
         void setName(
             const QString& newName
@@ -43,7 +42,7 @@ class File : public QObject {
         QString getText() const;
 
         void setText(
-            const QString& newText
+            const QString& new_text
         );
 
     signals:
